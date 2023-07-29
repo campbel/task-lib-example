@@ -1,6 +1,6 @@
 # task-lib-example
 
-An example app making use of the task-lib tasks
+An example app making use of the task-lib tasks with dynamic imports.
 
 This example uses library tasks defined in [github.com/campbel/task-lib](https://github.com/campbel/task-lib) and a _hacky_ task file to implement dynamic task fetching.
 
