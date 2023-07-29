@@ -1,0 +1,32 @@
+version: "3"
+
+includes:
+  kubectl: 
+    taskfile: ./.task/lib/kubectl/taskfile.yml
+    optional: true  # Necessary so task will run pre-flight
+  go: 
+    taskfile: ./.task/lib/golang/taskfile.yml
+    optional: true
+
+tasks:
+  # Pre-flight will perform any pre-flight setup, such as downloading libs
+  pre-flight:
+    desc: Pull the latest task libs
+    status:
+      - '[[ -d .task/lib ]]'
+    cmds:
+      - go-getter github.com/campbel/task-lib ./.task/lib
+
+  # Run is the entry point for all execution, e.g.
+  # task run -- setup
+  run:
+    deps: [pre-flight]
+    cmds:
+      - task {{ .CLI_ARGS }}
+
+  # Normal tasks go here
+  setup:
+    desc: Setup the project
+    cmds:
+      - task: kubectl:install
+      - task: go:install
